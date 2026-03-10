@@ -5,4 +5,4 @@ python-multipart
 passlib
 reportlab
 openai
-itsdangerousgit 
+itsdangerousg 
