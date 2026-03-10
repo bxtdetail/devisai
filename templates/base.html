@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DevisAI{% endblock %}</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    {% block navbar %}
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="brand">
+                {% if company_settings and company_settings[8] %}
+                    <img src="{{ company_settings[8] }}" alt="Logo" style="height:40px;vertical-align:middle;border-radius:8px;">
+                {% else %}
+                    {{ company_settings[1] if company_settings else "DevisAI" }}
+                {% endif %}
+            </div>
+
+            <div class="nav-links">
+                <a href="/">Accueil</a>
+                <a href="/pricing">Tarifs</a>
+                <a href="/contact">Contact</a>
+                <a href="/free-trial">Essai gratuit</a>
+
+                {% if user %}
+                    <a href="/dashboard">Dashboard</a>
+                    <a href="/clients">Clients</a>
+                    <a href="/billing">Facturation</a>
+                    <a href="/settings">Paramètres</a>
+                    <a href="/profile">Profil</a>
+                    {% if record and record[4] == 1 %}
+                        <a href="/admin">Admin</a>
+                    {% endif %}
+                    <a href="/logout">Déconnexion</a>
+                {% else %}
+                    <a href="/login">Connexion</a>
+                    <a href="/register">Créer un compte</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    {% block content %}{% endblock %}
+
+    <div class="footer">
+        © {{ current_year }} DevisAI
+    </div>
+</body>
+</html>

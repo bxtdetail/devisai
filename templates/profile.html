@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Profil{% endblock %}
+
+{% block content %}
+<div class="container page">
+    <div class="grid-2">
+        <div class="card">
+            <h1>{{ user }}</h1>
+            <p>Formule actuelle : <strong>{{ record[3]|upper }}</strong></p>
+
+            <div class="summary">
+                <strong>Nombre total de devis :</strong> {{ total_quotes }}<br>
+                <strong>Nombre total de clients :</strong> {{ total_clients }}
+            </div>
+
+            <div style="margin-top:18px;">
+                <a href="/billing" class="btn">Gérer ma facturation</a>
+                <a href="/settings" class="btn btn-secondary">Paramètres entreprise</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Aperçu entreprise</h2>
+
+            {% if company_settings %}
+                {% if company_settings[8] %}
+                    <div style="margin-bottom:16px;">
+                        <img src="{{ company_settings[8] }}" alt="Logo" style="max-height:80px;max-width:220px;border-radius:12px;">
+                    </div>
+                {% endif %}
+
+                <p><strong>{{ company_settings[1] }}</strong></p>
+                <p class="muted">{{ company_settings[2] }}</p>
+                <p class="muted">{{ company_settings[3] }}</p>
+                <p class="muted">{{ company_settings[4] }}</p>
+                <p class="muted">Préfixe devis : {{ company_settings[6] }}</p>
+                <p class="muted">Validité : {{ company_settings[7] }} jours</p>
+            {% else %}
+                <p class="muted">Aucun paramètre entreprise configuré.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

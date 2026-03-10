@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Tarifs{% endblock %}
+
+{% block content %}
+<div class="container page">
+    <div style="text-align:center;margin-bottom:40px;">
+        <h1>Tarifs DevisAI Premium</h1>
+        <p class="muted">Choisis la formule adaptée à ton activité.</p>
+    </div>
+
+    <div class="grid-3">
+        <div class="card">
+            <h2>Starter</h2>
+            <div style="font-size:42px;font-weight:bold;margin:16px 0;">19€</div>
+            <ul>
+                <li>5 devis / mois</li>
+                <li>PDF</li>
+                <li>Historique simple</li>
+            </ul>
+            <a href="/register" class="btn">Choisir Starter</a>
+        </div>
+
+        <div class="card" style="border:2px solid var(--primary);">
+            <h2>Pro</h2>
+            <div style="font-size:42px;font-weight:bold;margin:16px 0;">49€</div>
+            <ul>
+                <li>50 devis / mois</li>
+                <li>Multi-photos</li>
+                <li>Base clients</li>
+                <li>Édition de devis</li>
+            </ul>
+            <a href="/register" class="btn">Choisir Pro</a>
+        </div>
+
+        <div class="card">
+            <h2>Business</h2>
+            <div style="font-size:42px;font-weight:bold;margin:16px 0;">99€</div>
+            <ul>
+                <li>Devis illimités</li>
+                <li>Accès admin</li>
+                <li>Usage avancé</li>
+            </ul>
+            <a href="/contact" class="btn">Nous contacter</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

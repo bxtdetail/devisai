@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}DevisAI Premium{% endblock %}
+
+{% block navbar %}
+<div class="hero-dark">
+    <div class="container">
+        <div class="navbar" style="background:transparent;padding:0;">
+            <div class="navbar-inner" style="padding:0;">
+                <div class="brand">DevisAI Premium</div>
+                <div class="nav-links">
+                    <a href="/">Accueil</a>
+                    <a href="/pricing">Tarifs</a>
+                    <a href="/contact">Contact</a>
+                    <a href="/free-trial">Essai gratuit</a>
+                    {% if user %}
+                        <a href="/dashboard">Dashboard</a>
+                        <a href="/clients">Clients</a>
+                        <a href="/billing">Facturation</a>
+                        <a href="/profile">Profil</a>
+                        {% if record and record[4] == 1 %}
+                            <a href="/admin">Admin</a>
+                        {% endif %}
+                        <a href="/logout">Déconnexion</a>
+                    {% else %}
+                        <a href="/login">Connexion</a>
+                        <a href="/register">Créer un compte</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="hero">
+            <div>
+                <h1>Le SaaS premium pour tes devis bâtiment</h1>
+                <p class="muted" style="color:#dbeafe;font-size:18px;max-width:720px;">
+                    Gère tes clients, ajoute plusieurs photos, modifie tes devis,
+                    contrôle ton abonnement et structure ton activité dans une vraie application.
+                </p>
+
+                <div style="margin-top:28px;">
+                    {% if user %}
+                        <a href="/dashboard" class="btn">Accéder au dashboard</a>
+                    {% else %}
+                        <a href="/register" class="btn">Créer un compte</a>
+                        <a href="/free-trial" class="btn btn-secondary">Essayer</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="hero-panel">
+                <h2>Fonctions premium</h2>
+                <div class="feature">Multi-photos chantier</div>
+                <div class="feature">Base clients séparée</div>
+                <div class="feature">Édition de devis</div>
+                <div class="feature">Facturation et plan</div>
+                <div class="feature">Dashboard admin</div>
+                <div class="feature">Base prête à vendre</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}{% endblock %}

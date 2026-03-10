@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Devis généré{% endblock %}
+
+{% block content %}
+<div class="container page">
+    <div class="card" style="max-width:900px;margin:auto;">
+        <h1>Devis généré</h1>
+
+        <div class="summary">
+            <strong>Numéro :</strong> {{ quote_number }}<br>
+            <strong>Date :</strong> {{ created_at }}<br>
+            <strong>Client :</strong> {{ client }}<br>
+            <strong>Métier :</strong> {{ trade }}<br>
+            <strong>Indice de confiance :</strong> {{ confidence }} %<br>
+            <strong>Total HT :</strong> {{ total_ht }} €<br>
+            <strong>TVA :</strong> {{ tva }} €<br>
+            <strong>Total TTC :</strong> {{ total_ttc }} €
+        </div>
+
+        {% if vision_summary %}
+            <h3>Analyse photo IA</h3>
+            <p class="muted">{{ vision_summary }}</p>
+        {% endif %}
+
+        <h3>Détail matériel estimé</h3>
+        {% if lines %}
+            {% for l in lines %}
+                <div class="quote-item">
+                    <strong>{{ l.article }}</strong><br>
+                    <span class="muted">
+                        Quantité : {{ l.qty }} —
+                        PU : {{ "%.2f"|format(l.price) }} € —
+                        Total : {{ "%.2f"|format(l.total) }} €
+                        {% if l.suggested %}— suggestion IA{% endif %}
+                    </span>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="muted">Aucun article identifié dans le catalogue.</p>
+        {% endif %}
+
+        <h3>Main d’œuvre estimée</h3>
+        <p class="muted">{{ "%.2f"|format(labor) }} €</p>
+
+        <h3>Prestations retenues</h3>
+        <ul>
+            {% for d in details %}
+                <li>{{ d }}</li>
+            {% endfor %}
+        </ul>
+
+        <p class="muted">
+            Cette estimation combine le texte, le catalogue de prix, et l’analyse photo quand des images sont envoyées.
+        </p>
+
+        <div style="margin-top:20px;">
+            <a href="/pdf/{{ pdf_name }}" class="btn">Télécharger le PDF</a>
+            <a href="/dashboard" class="btn btn-secondary">Retour au dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

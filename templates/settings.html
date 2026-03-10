@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Paramètres entreprise{% endblock %}
+
+{% block content %}
+<div class="container page">
+    <div class="card" style="max-width:900px;margin:auto;">
+        <h1>Paramètres entreprise</h1>
+
+        {% if success %}
+            <div class="alert-success">{{ success }}</div>
+        {% endif %}
+
+        {% if settings_data[8] %}
+            <div style="margin-bottom:20px;">
+                <img src="{{ settings_data[8] }}" alt="Logo" style="max-height:80px;max-width:220px;border-radius:12px;">
+            </div>
+        {% endif %}
+
+        <form method="post" action="/settings" enctype="multipart/form-data">
+            <label>Nom commercial</label>
+            <input type="text" name="company_name" value="{{ settings_data[1] }}" required>
+
+            <label>Adresse</label>
+            <input type="text" name="company_address" value="{{ settings_data[2] }}" required>
+
+            <label>Téléphone</label>
+            <input type="text" name="company_phone" value="{{ settings_data[3] }}" required>
+
+            <label>Email</label>
+            <input type="email" name="company_email" value="{{ settings_data[4] }}" required>
+
+            <label>Conditions de paiement</label>
+            <textarea name="payment_terms" rows="5" required>{{ settings_data[5] }}</textarea>
+
+            <label>Préfixe numérotation devis</label>
+            <input type="text" name="quote_prefix" value="{{ settings_data[6] }}" required>
+
+            <label>Validité du devis (jours)</label>
+            <input type="number" name="validity_days" value="{{ settings_data[7] }}" required>
+
+            <label>Logo</label>
+            <input type="file" name="logo" accept="image/*">
+
+            <button type="submit">Enregistrer les paramètres</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

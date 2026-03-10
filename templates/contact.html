@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+<div class="container page">
+    <div class="card" style="max-width:800px;margin:auto;">
+        <h1>Contact</h1>
+
+        {% if success %}
+            <div class="alert-success">{{ success }}</div>
+        {% endif %}
+
+        <form method="post" action="/contact">
+            <label>Nom</label>
+            <input type="text" name="name" required>
+
+            <label>Email</label>
+            <input type="email" name="email" required>
+
+            <label>Message</label>
+            <textarea name="message" rows="7" required></textarea>
+
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

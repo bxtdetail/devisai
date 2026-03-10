@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Clients{% endblock %}
+
+{% block content %}
+<div class="container page">
+    <div class="grid-2">
+        <div class="card">
+            <h2>Ajouter un client</h2>
+            <form method="post" action="/clients/add">
+                <label>Nom</label>
+                <input type="text" name="name" required>
+
+                <label>Email</label>
+                <input type="email" name="email">
+
+                <label>Téléphone</label>
+                <input type="text" name="phone">
+
+                <button type="submit">Ajouter</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Recherche client</h2>
+            <form method="get" action="/clients">
+                <label>Recherche</label>
+                <input type="text" name="q" value="{{ client_search_q }}" placeholder="Nom, email, téléphone">
+                <button type="submit">Rechercher</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:24px;">
+        <h2>Liste clients</h2>
+        {% if clients %}
+            {% for c in clients %}
+                <div class="client-item">
+                    <strong>{{ c[1] }}</strong><br>
+                    <span class="muted">{{ c[2] }} — {{ c[3] }}</span><br><br>
+                    <a class="delete-link" href="/clients/delete/{{ c[0] }}">Supprimer</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="muted">Aucun client trouvé.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

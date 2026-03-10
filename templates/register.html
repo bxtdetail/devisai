@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Créer un compte{% endblock %}
+
+{% block content %}
+<div class="container page">
+    <div class="card center-card">
+        <h1>Créer un compte</h1>
+
+        {% if error %}
+            <div class="alert-error">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" action="/register">
+            <label>Nom d’utilisateur</label>
+            <input type="text" name="username" required>
+
+            <label>Mot de passe</label>
+            <input type="password" name="password" required>
+
+            <button type="submit" class="btn-success">Créer mon compte</button>
+        </form>
+
+        <p class="muted" style="margin-top:16px;">
+            Déjà inscrit ? <a href="/login">Se connecter</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container page">
+    <div class="grid-3" style="margin-bottom:24px;">
+        <div class="card">
+            <h3>Devis utilisés</h3>
+            <p style="font-size:28px;font-weight:bold;">{{ quotes_count }} / {{ plan_limit }}</p>
+            <span class="badge">{{ record[3]|upper }}</span>
+        </div>
+
+        <div class="card">
+            <h3>CA estimé TTC</h3>
+            <p style="font-size:28px;font-weight:bold;">{{ "%.2f"|format(total_revenue) }} €</p>
+        </div>
+
+        <div class="card">
+            <h3>Répartition métiers</h3>
+            <p class="muted">
+                Électricité : {{ electricite_count }}<br>
+                Plomberie : {{ plomberie_count }}<br>
+                Rénovation : {{ renovation_count }}
+            </p>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="card">
+            <h2>Créer un devis</h2>
+
+            {% if error %}
+                <div class="alert-error">{{ error }}</div>
+            {% endif %}
+
+            <form action="/generate" method="post" enctype="multipart/form-data">
+                <label>Nom du client</label>
+                <input type="text" name="client" required>
+
+                <label>Description chantier</label>
+                <textarea
+                    name="description"
+                    rows="7"
+                    placeholder="Ex : remplacement tableau + 4 prises + 3 spots LED"
+                    required
+                ></textarea>
+
+                <label>Photos du chantier / tableau (optionnel, active l’analyse vision)</label>
+                <input type="file" name="photos" multiple>
+
+                <label>TVA</label>
+                <select name="tva_rate">
+                    <option value="0.10">10 %</option>
+                    <option value="0.20">20 %</option>
+                </select>
+
+                <button type="submit">Générer le devis</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Recherche et filtres</h2>
+
+            <form method="get" action="/dashboard">
+                <label>Recherche</label>
+                <input
+                    type="text"
+                    name="q"
+                    value="{{ search_q }}"
+                    placeholder="Client, description, numéro de devis"
+                >
+
+                <label>Métier</label>
+                <select name="trade">
+                    <option value="">Tous</option>
+                    <option value="electricite" {% if search_trade == "electricite" %}selected{% endif %}>Électricité</option>
+                    <option value="plomberie" {% if search_trade == "plomberie" %}selected{% endif %}>Plomberie</option>
+                    <option value="renovation" {% if search_trade == "renovation" %}selected{% endif %}>Rénovation</option>
+                </select>
+
+                <label>Trier par</label>
+                <select name="sort">
+                    <option value="date_desc" {% if search_sort == "date_desc" %}selected{% endif %}>Date décroissante</option>
+                    <option value="date_asc" {% if search_sort == "date_asc" %}selected{% endif %}>Date croissante</option>
+                    <option value="amount_desc" {% if search_sort == "amount_desc" %}selected{% endif %}>Montant décroissant</option>
+                    <option value="amount_asc" {% if search_sort == "amount_asc" %}selected{% endif %}>Montant croissant</option>
+                </select>
+
+                <button type="submit">Filtrer</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:24px;">
+        <h2>Historique des devis</h2>
+
+        {% if quotes %}
+            {% for q in quotes %}
+                <div class="quote-item">
+                    <div class="quote-top">
+                        <div>
+                            <strong>{{ q[1] }}</strong><br>
+                            <span class="muted">{{ q[7] }} — {{ q[8] }}</span><br>
+                            <span class="muted">
+                                {{ q[2] }}<br>
+                                Métier : {{ q[9] }}
+                            </span>
+                        </div>
+                        <div>
+                            <strong>{{ q[5] }} € TTC</strong>
+                        </div>
+                    </div>
+
+                    <div class="muted" style="margin-top:10px;">
+                        HT : {{ q[3] }} € — TVA : {{ q[4] }} €
+                    </div>
+
+                    <div style="margin-top:12px;">
+                        <a class="pdf-link" href="/pdf/{{ q[6] }}">PDF</a>
+                        <a class="edit-link" href="/quote/edit/{{ q[0] }}">Modifier</a>
+                        <a class="delete-link" href="/delete-quote/{{ q[0] }}">Supprimer</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="muted">Aucun devis trouvé avec ces critères.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
